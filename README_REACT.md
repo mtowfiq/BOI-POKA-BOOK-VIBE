@@ -1327,3 +1327,55 @@ Can think of the provider as the tower of cellphones, where any components (be i
 
 
 - Import tailwind and daisyUI plugins in index.css and not app.css
+
+
+**************************************************
+4) Book Vibe with Router-
+
+- If we want to change a variable's name while destructuring, use :
+
+eg- const { bookId: currentBookId, image } = book;
+
+- We can use loader with no params for dynamic routing in main.jsx. We can simply fetch the data using the loader, and in the element, we have to use the useParams hook to get the param, and then use useLoaderData() hook to get the overall data, and then find the id we're looking for by using .find method, but here it's important that we convert the param key that we destructure to an int, as when we destructure it, it becomes a string. (OR we could just simply use "==" instead of "===").
+
+main.jsx file-
+
+children: [
+      {
+        path: "/",
+        element: <Home></Home>
+      },
+      {
+        path: "books/:bookId",
+        element: <BookDetail></BookDetail>,
+        loader: () => fetch("../public/data/booksData.json")
+      },
+
+
+The element file (BookDetail file)-
+
+import { useLoaderData, useParams } from "react-router-dom";
+
+const BookDetail = () => {
+  const { bookId } = useParams();
+  const data = useLoaderData();
+  const id = parseInt(bookId);
+
+  const book = data.find((book) => book.bookId === id);
+  console.log(book);
+
+  const { bookId: currentBookId, image } = book;
+
+  return (
+    <div className="">
+      <h2 className="font-semibold text-center text-3xl">Book Number: {bookId}</h2>
+      <div className="mx-auto w-fit">
+        <img className="w-36 mx-auto my-3" src={image} alt="" />
+        <br />
+        <button className="btn btn-outline btn-accent mr-4">Read</button>
+        <button className="btn btn-accent">Wish List</button>
+      </div>
+    </div>
+  );
+};
+
