@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -78,9 +79,9 @@ const Navbar = () => {
             <h2 className="font-bold text-3xl">Book Vibe</h2>
         </div>
         <div className="flex growjustify-center space-x-4">
-            <h4 className="px-5 py-4">Home</h4>
-            <h4 className="px-5 py-4">Listed Books</h4>
-            <h4 className="px-5 py-4"> Pages to Read</h4>
+            <NavLink to="/">Home</NavLink>
+            <NavLink>Listed Books</NavLink>
+            <NavLink>Pages to Read</NavLink>
         </div>
         <div className="flex space-x-4">
             <div className="px-7 py-5 rounded-xl bg-green-500">

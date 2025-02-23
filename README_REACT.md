@@ -1324,3 +1324,6 @@ Can think of the provider as the tower of cellphones, where any components (be i
 3) Use useContext to access value in the context API.
 
 - Using context api, if we update the state in another component, it will affect the state in other components as well.
+
+
+- Import tailwind and daisyUI plugins in index.css and not app.css
