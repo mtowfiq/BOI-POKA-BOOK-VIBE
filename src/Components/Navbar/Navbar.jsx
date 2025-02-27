@@ -80,7 +80,7 @@ const Navbar = () => {
         </div>
         <div className="flex growjustify-center space-x-4">
             <NavLink to="/">Home</NavLink>
-            <NavLink>Listed Books</NavLink>
+            <NavLink to="/listedBooks">Listed Books</NavLink>
             <NavLink>Pages to Read</NavLink>
         </div>
         <div className="flex space-x-4">

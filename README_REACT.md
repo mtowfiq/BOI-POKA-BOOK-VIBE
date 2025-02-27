@@ -1379,3 +1379,5 @@ const BookDetail = () => {
   );
 };
 
+- When we deploy to netlify, and use react router and then click refresh, it will show page not founde error. To solve this, create a _redirects file under the public folder, and add the following line of code-
+ /index.html  200
