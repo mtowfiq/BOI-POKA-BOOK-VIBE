@@ -1448,3 +1448,21 @@ const handleSort = () =>{
 First install the package, then use the helmetprovider and wrap the route provider in main.jsx, and then simply use helmet component in every component and inside it will be a title, where we can be anything.
 
 - In the public folder, there's a file called vite.svg that's being used for the icon. We can change it from the index.html file. It could be a png or jpg or anything.
+
+- Provider should wrap the components that wants to access the providers. For example in context api, toasters, google map API.
+
+- For google maps api go to- https://visgl.github.io/react-google-maps/docs/get-started
+
+- Wrap the app or whatever route with the provider.
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <APIProvider apiKey={googleMapAPIKey}>
+      <App />
+    </APIProvider>
+  </StrictMode>,
+)
+
+- Then we need to provide an APIKey which is paid.
+
+- After that, we will get the code, with which we can just simply paste and modify to our liking. There are different versions as well, like heatmap, directions, autocomplete etc.
