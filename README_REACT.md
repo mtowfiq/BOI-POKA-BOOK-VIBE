@@ -1323,6 +1323,8 @@ Can think of the provider as the tower of cellphones, where any components (be i
 
 3) Use useContext to access value in the context API.
 
+const gift = useContext(AssetContext)
+
 - Using context api, if we update the state in another component, it will affect the state in other components as well.
 
 
@@ -1332,7 +1334,7 @@ Can think of the provider as the tower of cellphones, where any components (be i
 **************************************************
 4) Book Vibe with Router-
 
-- If we want to change a variable's name while destructuring, use :
+- If we want to change (rename) a variable's name while destructuring, use :
 
 eg- const { bookId: currentBookId, image } = book;
 
@@ -1381,3 +1383,68 @@ const BookDetail = () => {
 
 - When we deploy to netlify, and use react router and then click refresh, it will show page not founde error. To solve this, create a _redirects file under the public folder, and add the following line of code-
  /index.html  200
+
+- Important to know that when a component (A) wraps another component (B), component (b) which is inside will impicitly (automatically) be passed as props to component A as children. So we can just destructure {children} in component A and use if needed.
+
+- Use context api to send data (ids) from one route to another.
+1) Make a provider file, and create a context as well as a usestate, where we will be passing the state and a updater function as values to the provider. 
+
+2) In main.jsx, we need to wrap the route components with the provider component, and whenever we wrap a component (a) inside another component (b), then component a is passed as props implicitly to the component b.
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <ProductIdProvider>
+      <RouterProvider router={router} />
+      <ToastContainer />
+    </ProductIdProvider>
+  </StrictMode>,
+)
+
+3) We then destructure the children prop in the provider component and use it insider the provider, so that every component can get and access the context.
+
+import React, { createContext, useState } from 'react';
+
+export const ProductIdContext = createContext()
+
+const ProductIdProvider = ({children}) => {
+    const [productId, setProductId] = useState([])
+    const addProductIdToWishlist = (id) => {
+        setProductId((prevIds)=> setProductId([...prevIds, id]))
+    }
+    const [productIdCart, setProductIdCart] = useState([])
+    const addProductIdToCart = (id) =>{
+        setProductIdCart((prevIds)=> setProductIdCart([...prevIds, id]))
+    }
+    return (
+        <div>
+            <ProductIdContext.Provider value={{productId, addProductIdToWishlist, addProductIdToCart, productIdCart, setProductIdCart}}>
+                {children}
+            </ProductIdContext.Provider>
+        </div>
+    );
+};
+
+export default ProductIdProvider;
+
+
+- When we use useParams(), we need to convert that into int because useparams returns a string.
+
+const {product_id} = useParams()
+const productIdInt = parseInt(product_id)
+
+- For sorting it's easier, if we use usestate hook. In the event handler make sure, we are using the spread operator to copy the array, because sorting mutates the original array.
+
+const items = data.filter(item => productIdCart.includes(item.product_id) )
+const [sortedItems, setSortedItems] = useState(items)
+
+const handleSort = () =>{
+        const sortedItemsArr = [...sortedItems].sort((a, b) => b.price - a.price)
+        setSortedItems(sortedItemsArr)
+}
+
+
+- Use react helmet async for dynamically changing the title.
+
+First install the package, then use the helmetprovider and wrap the route provider in main.jsx, and then simply use helmet component in every component and inside it will be a title, where we can be anything.
+
+- In the public folder, there's a file called vite.svg that's being used for the icon. We can change it from the index.html file. It could be a png or jpg or anything.
